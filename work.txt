@@ -1,0 +1,233 @@
+1)
+func isPalindrome(text:String) -> Bool {
+    let rvString = String(text.characters.reversed())
+    if(text != "" && text == rvString) {
+        return true
+    } else {
+        return false
+    }
+}
+
+print(isPalindrome(text:"ai ia"))
+
+-----------------------------------------------------------------------
+
+2)
+#include<bits/stdc++.h> 
+using namespace std; 
+
+int minSplit(int coins[], int m, int V) 
+{ 
+    int mas[V+1]; 
+  
+    mas[0] = 0; 
+
+    for (int i=1; i<=V; i++) 
+        mas[i] = INT_MAX; 
+  
+    for (int i=1; i<=V; i++) 
+    { 
+        for (int j=0; j<m; j++) 
+          if (coins[j] <= i) 
+          { 
+              int k = mas[i-coins[j]]; 
+              if (k != INT_MAX && k + 1 < mas[i]) 
+                  mas[i] = k + 1; 
+          } 
+    } 
+    return mas[V]; 
+} 
+
+int main() 
+{ 
+    int coinsArray[] =  {1,5,10,20,50}; 
+    int m = sizeof(coinsArray)/sizeof(coinsArray[0]); 
+    int Am = 550; 
+    cout << "Min coins =  "
+         << minSplit(coinsArray, m, Am); 
+    return 0; 
+} 
+
+---------------------------------------------------------------
+
+3)
+#include <bits/stdc++.h> 
+using namespace std; 
+  
+void swap(int* a, int* b) 
+{ 
+    int temp; 
+    temp = *a; 
+    *a = *b; 
+    *b = temp; 
+} 
+  
+int segregate(int arr[], int size) 
+{ 
+    int j = 0, i; 
+    for (i = 0; i < size; i++) { 
+        if (arr[i] <= 0) { 
+            swap(&arr[i], &arr[j]); 
+            j++; 
+        } 
+    } 
+  
+    return j; 
+} 
+  
+int findMissingPositive(int arr[], int size) 
+{ 
+    int i; 
+  
+    for (i = 0; i < size; i++) { 
+        if (abs(arr[i]) - 1 < size && arr[abs(arr[i]) - 1] > 0) 
+            arr[abs(arr[i]) - 1] = -arr[abs(arr[i]) - 1]; 
+    } 
+  
+    for (i = 0; i < size; i++) 
+        if (arr[i] > 0) 
+            return i + 1; 
+  
+    return size + 1; 
+} 
+ 
+int findMissing(int arr[], int size) 
+{ 
+    int shift = segregate(arr, size); 
+ 
+    return findMissingPositive(arr + shift, size - shift); 
+} 
+  
+int main() 
+{ 
+    int arr[] = { 0,1, 10, 2, -10, -20 }; 
+    int arr_size = sizeof(arr) / sizeof(arr[0]); 
+    int missing = findMissing(arr, arr_size); 
+    cout << "The smallest positive missing number is " << missing; 
+    return 0; 
+} 
+
+--------------------------------------------------------------
+
+4)
+
+#include <bits/stdc++.h> 
+using namespace std; 
+
+bool isProperly(string sequence) 
+{   
+    stack<char> s; 
+    char x; 
+  
+    for (int i = 0; i < sequence.length(); i++)  
+    { 
+        if (sequence[i] == '(')  
+        { 
+          
+            s.push(sequence[i]); 
+            continue; 
+        } 
+  
+        if (s.empty()) 
+            return false; 
+  
+        switch (sequence[i]) { 
+        case ')': 
+           
+            x = s.top(); 
+            s.pop(); 
+            if (x == '{' || x == '[') 
+                return false; 
+            break; 
+
+        } 
+    } 
+  
+    return (s.empty()); 
+} 
+
+
+int main() 
+{ 
+    string sequence = "((()))"; 
+  
+    if (isProperly(sequence)) 
+        cout << "Balanced"; 
+    else
+        cout << "Not Balanced"; 
+    return 0; 
+} 
+
+
+--------------------------------------------------------------
+
+5) 
+#include <bits/stdc++.h> 
+using namespace std; 
+
+int myfunc(int n) 
+{ 
+	if (n <= 1) 
+		return n; 
+	return myfunc(n - 1) + myfunc(n - 2); 
+} 
+
+int countVariants(int stearsCount) 
+{ 
+	return myfunc(stearsCount + 1); 
+} 
+
+int main() 
+{ 
+	int s = 3; 
+
+	cout << "Number of variants = " << countVariants(s); 
+
+	return 0; 
+} 
+
+
+
+6)
+#include<bits/stdc++.h> 
+using namespace std; 
+  
+  class myclass 
+{ 
+    vector <int> arr; 
+    
+    map <int, int> Map; 
+  
+    public: 
+    
+// func add element 
+    void add(int x) 
+    { 
+        if(Map.find(x) != Map.end()) 
+            return; 
+              
+        int index = arr.size(); 
+        arr.push_back(x); 
+    } 
+ //func delelte element 
+    void clear(int x) 
+    { 
+        if(Map.find(x) == Map.end()) 
+            return; 
+        int index = Map.at(x); 
+        Map.erase(x); 
+              
+        int last = arr.size() - 1; 
+        swap(arr[index], arr[last]); 
+        arr.pop_back(); 
+              
+        Map.at(arr[index]) = index; 
+    } 
+};
+
+int main() 
+{ 
+    myclass mc; 
+    mc.add(20);
+    mc.clear(20);
+}
